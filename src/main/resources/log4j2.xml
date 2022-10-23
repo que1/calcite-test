@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="WARN" monitorInterval="3600" packages="com.calcite.test">
+
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5p] [%l] -%m%n"/>
+        </Console>
+
+        <RollingFile name="RollingFileInfo" fileName="info.log" filePattern="info-%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5p] -%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="RollingFileError" fileName="error.log" filePattern="error-%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%-5p] [%l] -%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+
+    <Loggers>
+        <Logger name="org.springframework" level="WARN"></Logger>
+        <Logger name="org.mybatis" level="WARN"></Logger>
+        <Logger name="org.hibernate" level="WARN"></Logger>
+        <Logger name="org.apache.kafka" level="WARN"></Logger>
+        <!--<Logger name="org.apache.logging.log4j" level="TRACE"></Logger>-->
+
+        <Root level="debug" includeLocation="true">
+            <Appender-ref ref="Console"/>
+            <Appender-ref ref="RollingFileInfo"/>
+            <Appender-ref ref="RollingFileError"/>
+            <!--<Appender-ref ref="WechatLog4j2Appender" />-->
+            <!--<AppenderRef ref="failoverTrace"/>-->
+            <!--<AppenderRef ref="failoverRecord"/>-->
+        </Root>
+    </Loggers>
+
+</Configuration>
